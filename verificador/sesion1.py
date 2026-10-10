@@ -196,25 +196,16 @@ def _ej0(ns):
     if a != "200.0":
         raise Incorrecto("La variable `a` debería tener el valor de '200.0'. Recuerda que primero se convirtió a float.")
         
-    if not isinstance(b, int):
-        raise Incorrecto("La variable `b` debe ser de tipo int al final del ejercicio. ¿Usaste `round()`?")
-    if b != 10:
-        raise Incorrecto("La variable `b` debería tener el valor de 10.")
-        
     return "¡Excelente! Has convertido los tipos de las variables correctamente."
 
 ej0 = sesion.agregar(
     "ej0", "Conversión de tipos", _ej0,
-    pista="Recuerda usar las funciones float(), int() y str() para convertir las variables, y no olvides que al final `b` se redefine a 9.6 y se redondea.",
+    pista="Recuerda usar las funciones float(), int() y str() para convertir las variables.",
     solucion='''a = float(a)
 print(type(a))
 b = int(b)
 print(b)
-a = str(a)
-b = 9.6
-b = round(b)
-print(b)
-print(type(b))'''
+a = str(a)'''
 )
 
 
