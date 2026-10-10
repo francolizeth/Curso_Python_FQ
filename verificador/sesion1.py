@@ -185,7 +185,54 @@ molaridad = (masa / masa_molar / volumen).to("mol/L")
 print(f"c = {molaridad:.4f~P}")
 """)
 
+# --- Ejercicio 0: Conversión de tipos ------------------------------------------------
 
+def _ej0(ns):
+    a = obtener(ns, "a")
+    b = obtener(ns, "b")
+    
+    if not isinstance(a, str):
+        raise Incorrecto("La variable `a` debe ser de tipo str al final del ejercicio. ¿Usaste `str(a)`?")
+    if a != "200.0":
+        raise Incorrecto("La variable `a` debería tener el valor de '200.0'. Recuerda que primero se convirtió a float.")
+        
+    if not isinstance(b, int):
+        raise Incorrecto("La variable `b` debe ser de tipo int al final del ejercicio. ¿Usaste `round()`?")
+    if b != 10:
+        raise Incorrecto("La variable `b` debería tener el valor de 10.")
+        
+    return "¡Excelente! Has convertido los tipos de las variables correctamente."
+
+ej0 = sesion.agregar(
+    "ej0", "Conversión de tipos", _ej0,
+    pista="Recuerda usar las funciones float(), int() y str() para convertir las variables, y no olvides que al final `b` se redefine a 9.6 y se redondea.",
+    solucion='''a = float(a)
+print(type(a))
+b = int(b)
+print(b)
+a = str(a)
+b = 9.6
+b = round(b)
+print(b)
+print(type(b))'''
+)
+
+
+# --- Ejercicio 1: Redondeo -----------------------------------------------------------
+
+def _ej_redondeo(ns):
+    pi_redondeado = obtener(ns, "pi_redondeado")
+    import math
+    comparar_numero("pi_redondeado", pi_redondeado, round(math.pi, 15), rel=1e-15)
+    return "¡Correcto! Has redondeado pi a 15 decimales."
+
+ej_redondeo = sesion.agregar(
+    "ej_redondeo", "Redondeo", _ej_redondeo,
+    pista="Utiliza la función `round(numero, decimales)`. Asegúrate de guardar tu resultado en una variable llamada `pi_redondeado`.",
+    solucion='''pi = 3.141592653589793238462643383279502884197
+pi_redondeado = round(pi, 15)
+print(pi_redondeado)'''
+)
 # --- Autoevaluación -----------------------------------------------------------
 
 def _auto1(ns):
