@@ -27,12 +27,12 @@ jobs:
 
     steps:
       - name: Descargar el repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
-          fetch-depth: 0   # Historial completo para saber qué archivos cambió el push
+          fetch-depth: 0   # Historial completo para saber qué archivos cambió el push o el PR
 
       - name: Instalar Python 3.12 (la versión de Google Colab)
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -54,9 +54,9 @@ jobs:
         run: python herramientas/construir_notebooks.py
 
       - name: Nadie editó a mano los notebooks generados
-        if: github.event_name == 'push'
         env:
-          ANTES: ${{ github.event.before }}
+          # En un PR se compara con la rama base; en un push, con el commit anterior
+          ANTES: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
           GENERADOS="notebooks_verificador soluciones seguimiento/Tablero_docente.ipynb verificador/adicionales_sesion1.json verificador/adicionales_sesion2.json verificador/adicionales_sesion3.json"
           if git diff --quiet -- $GENERADOS; then
