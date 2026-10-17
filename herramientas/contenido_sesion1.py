@@ -1,6 +1,6 @@
 """Contenido de la Sesión 1: fundamentos de Python aplicados a cálculos químicos."""
 
-from bloques import cierre, code, ejercicio, encabezado, instrucciones, md
+from bloques import URL_CRUDA, cierre, code, ejercicio, encabezado, instrucciones, md, variante
 
 
 def fuente(carpeta, archivo):
@@ -16,6 +16,50 @@ trabajaremos con muchos datos a la vez usando **NumPy** y aprenderemos a cuidar 
 - Resumir datos experimentales y operar con vectores y matrices usando NumPy.
 - Evitar errores de unidades, como los factores de 1000, con la biblioteca pint.
 """, carpeta, archivo)
+        + md("## **Exploremos Google Colab**")
+        + md(f"""
+### **Primer paso**
+Guardemos una copia de este archivo notebook (Sesion_1.ipynb) en Google Drive.
+
+### **Segundo paso**
+Desactivemos la asistencia IA temporalmente.
+
+<center>
+
+![]({URL_CRUDA}/imagenes/configuracion_ia.svg)
+
+</center>
+
+### **Tercer paso**
+#### **Configuremos a nuestro gusto los notebook de Google Colab**
+
+#### Ejemplos:
+
+
+#### **Tema**
+
+<center>
+
+![]({URL_CRUDA}/imagenes/sitio.svg)
+
+</center>
+
+#### **Tamaño de la fuente en el código**
+
+<center>
+
+![]({URL_CRUDA}/imagenes/tama%C3%B1o_fuente.svg)
+
+</center>
+
+#### **Varios (animales y efectos visuales)**
+
+<center>
+
+![]({URL_CRUDA}/imagenes/varios.svg)
+
+</center>
+""")
         + instrucciones(1)
         + md("""
 ## **Contexto y motivación**
@@ -34,23 +78,39 @@ cantidad de recursos y bibliotecas científicas.
         + md(r"""
 ## **Tipos de celdas**
 
-1. **Celda de texto** (*Markdown*): sirve para explicaciones y fórmulas en LaTeX, como la
-   ecuación de van der Waals:
+### **1. Celda de texto** (*Markdown*):
+
+Sirve para documentar, explicar y estructurar. Se pueden agregar fórmulas mediante LaTeX. Por
+ejemplo, así escribimos la ecuación de van der Waals:
 
 $$ \left(P + \frac{an^2}{V^2}\right)(V - nb) = nRT $$
 
-2. **Celda de código**: sirve para ejecutar instrucciones de Python. Se ejecuta con
-   `Shift + Enter` o con el botón ▶.
+Da click en esta celda y agrega tu propio texto y tu propia fórmula en el espacio después de este texto:
+<div style="height: 200px;">&nbsp;</div>
+
+
+
+
+
+Para salir da click en `Esc`.
+""")
+        + md("""
+## **2. Celda de código**:
+Sirve para ejecutar instrucciones de Python. Se ejecuta con `Shift + Enter` o con el botón ▶.
+
+Ejemplo:
 """)
         + code("""
 print("¡Hola, mundo!")
 """)
-        + code("""
-# Con input() el programa le pide información a quien lo usa
-nombre = input("Introduce tu nombre: ")
+        + md("""
+También nos permite realizar comentarios (texto en el código que el intérprete de Python ignora
+en la ejecución).
 
-# Con print() mostramos información; las cadenas f"..." insertan variables entre llaves
-print(f"Tu nombre es {nombre}.")
+Ejemplo:
+""")
+        + code("""
+# Esto es un comentario. :) Los comentarios son una muy buena práctica en la programación.
 """)
         + md("""
 ## **Tipos de datos**
@@ -65,16 +125,133 @@ En química manejamos distintos tipos de información:
 | Lógico | `bool` | ¿La disolución es ácida? (`True` / `False`) |
 """)
         + code("""
+# Declararemos variables para cada tipo.
+a = 200
+b = 9.6
+c = "Texto"
+d = True
+""")
+        + code("""
+# Verificamos qué tipo de variable es:
+print(type(a))
+
+# particularmente, en los notebooks también podemos hacer
+type(a)
+""")
+        + variante("""
+# En esta celda verifica qué tipo de variable es c
+""", """
+# En esta celda verifica qué tipo de variable es c
+type(c)
+""")
+        + code("""
+# Se me olvidó quién es "c"
+print(c)
+# Pero también puedo hacer
+c
+""")
+        + variante("""
+# Se me olvidó quién es "a" y quién es "b", dime quiénes son:
+""", """
+# Se me olvidó quién es "a" y quién es "b", dime quiénes son:
+print(a)
+print(b)
+""")
+        + md("""
+## **Funciones integradas de Conversión explícita de tipos**
+
+| Función | Propósito | Ejemplo | Resultado |
+|---|---|---|---|
+| `int()` | Convertir a entero | `int(3.8)` | `3` |
+| `float()` | Convertir a número decimal | `float("3.14")` | `3.14` |
+| `str()` | Convertir a cadena de texto | `str(25)` | `"25"` |
+| `bool()` | Convertir a booleano | `bool(1)` | `True` |
+| `complex()` | Convertir a número complejo | `complex(2, 3)` | `(2+3j)` |
+""")
+        + md("""
+### **Ejercicio 0: conversión de tipos**
+Realiza las siguientes conversiones de tipos.
+""")
+        + variante("""
+# Cambia el entero (int) declarado como "a" flotante (float).
+a = ____
+""", """
+# Cambia el entero (int) declarado como "a" flotante (float).
+a = float(a)
+""")
+        + code("""
+# Verifica el cambio en el tipo de variable de "a"
+print(type(a))
+""")
+        + variante("""
+# Cambia el flotante "b" a entero e imprímelo, ¿qué es lo que pasa?
+b = ____
+print(b)
+""", """
+# Cambia el flotante "b" a entero e imprímelo, ¿qué es lo que pasa?
+b = int(b)
+print(b)
+""")
+        + ejercicio("ej0", """
+# Ahora vuelve a "a" un string
+a = ____
+""")
+        + code("""
+# Construyamos una frase:
 # Modifica los valores de las variables y vuelve a ejecutar la celda
 nombre_compuesto = "HCl"    # str
 numero_muestras = 3         # int
 concentracion_molar = 0.5   # float (mol/L)
 
+# Imprime esta frase
 print(f"Se analizaron {numero_muestras} muestras de {nombre_compuesto} "
       f"con una concentración de {concentracion_molar} mol/L.")
 """)
-        + md("Puedes consultar el tipo de una variable con la función `type()`.")
-        + code("type(concentracion_molar)")
+        + md("""
+Nota que en la impresión de la frase anterior las variables van entre llaves, {}. Lo que f,
+colocada antes de las comillas, está diciendo es: "No analices a este texto como a cualquier
+string, evalúa lo que está dentro de las llaves, conviértelo a string y déjalo en la misma
+posición".
+""")
+        + md("""
+## **Funciones de entrada y salida**
+
+Como hemos visto, la función integrada `print()` nos permite ver las salidas de cualquiera de los
+tipos de datos.
+
+Así como existe esa función de salida, hay una función de entrada: el usuario puede definir
+variables con la función integrada `input()`. Este tipo de dato se recibe exclusivamente como
+string.
+""")
+        + code("""
+# Con input() el programa le pide información a quien lo usa
+nombre = input("Introduce tu nombre: ")
+
+# Con print() mostramos información; las cadenas f"..." insertan variables entre llaves
+print(f"Tu nombre es {nombre}.")
+""")
+        + md("""
+## **Funciones matemáticas integradas**
+Aquí algunos ejemplos:
+
+| Función | Propósito | Ejemplo | Resultado |
+|---|---|---|---|
+| `abs()` | Calcular el valor absoluto | `abs(-5)` | `5` |
+| `round()` | Redondear un número | `round(3.1416, 2)` | `3.14` |
+| `max()` | Obtener el valor máximo | `max(3, 8, 2)` | `8` |
+| `min()` | Obtener el valor mínimo | `min(3, 8, 2)` | `2` |
+| `divmod()` | Obtener el cociente y el residuo de una división | `divmod(17, 5)` | `(3, 2)` |
+""")
+        + md(r"""
+## **Ejercicio 1**: Redondeo.
+
+Redondea el número $\pi = 3.141592653589793238462643383279502884197$ 15 números después del punto.
+""")
+        + ejercicio("ej_redondeo", """
+pi = 3.141592653589793238462643383279502884197
+# Redondea a 15 decimales y guárdalo en la variable "pi_redondeado"
+pi_redondeado = ____
+""")
         + md("""
 ## **Operaciones básicas**
 
@@ -106,7 +283,7 @@ a ** b
 a ** 2
 """)
         + md(r"""
-### **Ejercicio 1: Jerarquía de operaciones**
+### **Ejercicio 2: Jerarquía de operaciones**
 
 Guarda en la variable `x` el resultado de la siguiente operación, respetando la jerarquía de
 operaciones:
@@ -169,7 +346,7 @@ numero_moleculas = masa_hcl / masa_molar_hcl * constante_avogadro
 print(f"Hay {numero_moleculas:.2e} moléculas en {masa_hcl} g de HCl.")
 """)
         + md("""
-### **Ejercicio 2a: Conversión de masa a moles**
+### **Ejercicio 3a: Conversión de masa a cantidad de sustancia (mol)**
 
 Calcula la cantidad de sustancia (`moles_hcn`) en 10.0 g de cianuro de hidrógeno (HCN).
 Investiga su masa molar y guárdala en `masa_molar_hcn`.
@@ -182,7 +359,7 @@ moles_hcn = ____
 print(f"Moles de HCN: {moles_hcn}")
 """)
         + md("""
-### **Ejercicio 2b: Número de moléculas**
+### **Ejercicio 3b: Número de moléculas**
 
 Calcula el número de moléculas de HCN (`moleculas_hcn`). Aprovecha las variables que ya
 definiste en las celdas anteriores.
@@ -190,6 +367,13 @@ definiste en las celdas anteriores.
         + ejercicio("ej2b", """
 moleculas_hcn = ____
 print(f"Moléculas de HCN: {moleculas_hcn}")
+""")
+        + code("""
+# Hay una manera menos elegante de escribir cadenas de texto con strings.
+pka = -6.3 # valor de pka del HCl
+ka = 10**(-pka)
+
+print("El valor de la constante de disociación del HCl es: ", ka)
 """)
         + md("""
 ## **Introducción a NumPy**
@@ -200,16 +384,21 @@ concentraciones de una curva de calibración.
 
 **NumPy** es la biblioteca base del cómputo científico en Python. Una **biblioteca** es un
 conjunto de funciones que alguien más escribió y que podemos reutilizar; se carga con `import` y
-es costumbre darle un alias corto. NumPy ofrece los **arreglos** (`np.array`): colecciones de
-números, escritas entre corchetes `[ ]`, con las que podemos operar todos los elementos a la vez.
+es costumbre darle un alias corto.
+
+NumPy ofrece los **arreglos** (`np.array`): colecciones de números, escritas entre corchetes
+`[ ]`, con las que podemos operar todos los elementos a la vez.
+
+`arreglo = np.array([elemento_1, elemento_2, elemento_3, ..., elemento_n])`
 """)
         + code("""
 import numpy as np
 """)
         + code("""
-# Cuatro réplicas de la valoración de una disolución de NaOH (mol/L)
+# Cuatro repeticiones de la valoración de una disolución de NaOH (mol/L).
 replicas = np.array([0.1012, 0.1008, 0.1015, 0.1010])
 
+# Calculamos métricas estadísticas.
 print("Número de réplicas:", len(replicas))
 print(f"Promedio: {replicas.mean():.4f} mol/L")
 print(f"Desviación estándar: {replicas.std(ddof=1):.4f} mol/L")   # ddof=1: muestral
@@ -220,11 +409,30 @@ print(f"Mínimo y máximo: {replicas.min()} y {replicas.max()} mol/L")
 temperaturas_C = np.array([0.0, 25.0, 37.0, 100.0])
 print("En kelvin:", temperaturas_C + 273.15)
 
-# Moles de soluto en distintos volúmenes de una disolución 0.1 mol/L
+# Cantidad de sustancia del soluto en distintos volúmenes de una disolución 0.1 mol/L
 volumenes_L = np.array([0.010, 0.025, 0.050])
-print("Moles:", 0.1 * volumenes_L)
+print("Cantidad de sustancia:", 0.1 * volumenes_L)
 """)
-        + md("Los arreglos representan vectores y matrices, y permiten las operaciones del álgebra lineal:")
+        + md(r"""
+### **Vectores y matrices en NumPy**
+
+Los vectores y matrices pueden representarse con arreglos de NumPy, lo que permite realizar
+operaciones de álgebra lineal de manera eficiente.
+
+$$
+\mathbf{A} =
+\begin{pmatrix}
+1 & 2 \\
+3 & 4
+\end{pmatrix}
+\qquad
+\mathbf{B} =
+\begin{pmatrix}
+5 & 6 \\
+7 & 8
+\end{pmatrix}
+$$
+""")
         + code("""
 matriz_A = np.array([[1, 2],
                      [3, 4]])
@@ -240,44 +448,81 @@ print("A @ B =\\n", matriz_A @ matriz_B)
 # Transpuesta
 print("Aᵀ =\\n", matriz_A.T)
 """)
-        + md("""
-Cada elemento de un arreglo tiene una **posición** (índice) que empieza en **0**. Además podemos
-extraer filas o columnas completas con **rebanadas** (*slicing*): `arr[fila, columna]`, donde `:`
-significa "todas".
-""")
-        + code("""
-arr = np.arange(9).reshape(3, 3)    # Números del 0 al 8 acomodados en una matriz 3×3
-print(arr, "forma:", arr.shape)
+        + md(r"""
+Es decir,
 
-print("Primera fila:", arr[0])
-print("Elemento (0, 1):", arr[0, 1])
-print("Primera columna:", arr[:, 0])
-
-arr[0, :] = [10, 20, 30]            # Reemplazamos la primera fila
-print(arr)
+$$
+\mathbf{A} * \mathbf{B} =
+\begin{pmatrix}
+1 \cdot 5 & 2 \cdot 6 \\
+3 \cdot 7 & 4 \cdot 8
+\end{pmatrix}
+=
+\begin{pmatrix}
+5 & 12 \\
+21 & 32
+\end{pmatrix}
+$$
+<br>
+y
+<br>
+$$
+\mathbf{A}@\mathbf{B} =
+\begin{pmatrix}
+1\cdot5 + 2\cdot7 & 1\cdot6 + 2\cdot8 \\
+3\cdot5 + 4\cdot7 & 3\cdot6 + 4\cdot8
+\end{pmatrix}
+=
+\begin{pmatrix}
+19 & 22 \\
+43 & 50
+\end{pmatrix}
+$$
+<br>
+<br>
+$$
+\mathbf{A}^{T} =
+\begin{pmatrix}
+1 & 2 \\
+3 & 4
+\end{pmatrix}^{T}
+=
+\begin{pmatrix}
+1 & 3 \\
+2 & 4
+\end{pmatrix}
+$$
 """)
         + md("El módulo `np.linalg` contiene las funciones más comunes de álgebra lineal:")
         + code("""
 print("Determinante de A:", np.linalg.det(matriz_A))
-
 valores_propios, vectores_propios = np.linalg.eig(matriz_A)
 print("Valores propios:", valores_propios)
 print("Vectores propios (columnas):\\n", vectores_propios)
 """)
+        + md(r"""
+### **Ejercicio 4:**
+Resuelve el sistema de ecuaciones utilizando NumPy:
+
+$$
+\begin{cases}
+2x + y + z = 10 \\
+x - y + 2z = 5 \\
+3x + 2y - z = 7
+\end{cases}
+$$
+""")
         + code("""
-# Resolver el sistema   2x +  y +  z = 10
-#                        x -  y + 2z =  5
-#                       3x + 2y -  z =  7
 coeficientes = np.array([[2,  1,  1],
                          [1, -1,  2],
-                         [3,  2, -1]])
-resultados = np.array([10, 5, 7])
+                         [3,  2, -1]]) # matriz
+resultados = np.array([10, 5, 7]) # vector
 
 solucion = np.linalg.solve(coeficientes, resultados)
 print("x, y, z =", solucion)
 """)
         + md(r"""
-### **Ejercicio 3: Matriz de rotación**
+### **Ejercicio 5: Matriz de rotación**
 
 Para rotar un vector en $\mathbb{R}^2$ un ángulo $\theta$ se multiplica por la matriz de rotación:
 
@@ -299,7 +544,7 @@ v_rotado = ____
 print(v_rotado)
 """)
         + md(r"""
-### **Ejercicio 4: Regla de Cramer**
+### **Ejercicio 6: Regla de Cramer**
 
 Para un sistema de $2 \times 2$
 
@@ -339,6 +584,9 @@ pequeño, y Python no se queja porque solo ve números.
 
 La biblioteca **pint** une cada número con su unidad. Así, las conversiones se hacen solas y
 Python se detiene si intentas combinar unidades incompatibles.
+
+A diferencia de NumPy, **pint** no viene instalada por defecto en Google Colab, por lo que debemos
+instalarla.
 """)
         + code("""
 try:
@@ -352,7 +600,10 @@ from pint import UnitRegistry
 ureg = UnitRegistry()     # Catálogo de unidades
 Q_ = ureg.Quantity        # Atajo para crear cantidades, útil con temperaturas
 """)
-        + md("Una **cantidad** es un número multiplicado por una unidad. Con `.to()` se convierte a otra unidad:")
+        + md("""
+### **Conversión de unidades**
+Una **cantidad** es un número multiplicado por una unidad. Con `.to()` se convierte a otra unidad:
+""")
         + code("""
 volumen = 250 * ureg.mL
 masa = 2.5 * ureg.kg
@@ -363,6 +614,7 @@ print((1 * ureg.atm).to("kPa"))
 print(f"{(8.314 * ureg('J/(mol*K)')).to('L*atm/(mol*K)'):.5f}")   # R en otras unidades
 """)
         + md("""
+### **Ejercicio 7: Cálculo de la concentración**
 Las unidades se multiplican y se dividen junto con los números. Veamos el error típico de
 calcular una concentración con el volumen en mililitros:
 """)
@@ -374,7 +626,11 @@ concentracion = moles / volumen
 print(concentracion)                  # mol/mL: correcto, pero en unidades poco usuales
 print(concentracion.to("mol/L"))      # pint hace la conversión por ti
 """)
-        + md("Si combinas unidades incompatibles, pint lanza un `DimensionalityError` en lugar de darte un resultado sin sentido:")
+        + md("""
+### **Ejercicio 8: Unidades incompatibles**
+Si combinas unidades incompatibles, pint lanza un `DimensionalityError` en lugar de darte un
+resultado sin sentido:
+""")
         + code("""
 masa = 5 * ureg.g
 volumen = 100 * ureg.mL
@@ -382,6 +638,7 @@ volumen = 100 * ureg.mL
 masa + volumen      # ¿Sumar gramos con mililitros? Error a propósito
 """, error_esperado=True)
         + md("""
+### **Ejercicio 9: Temperaturas**
 Las temperaturas en °C necesitan cuidado: 20 °C no es «el doble» de 10 °C. Crea la cantidad con
 `Q_(valor, ureg.degC)` y conviértela a kelvin antes de multiplicar o dividir.
 """)
@@ -390,7 +647,7 @@ T = Q_(25.0, ureg.degC)
 print(T.to("K"))
 """)
         + md(r"""
-### **Ejercicio 5a: Gas ideal con unidades**
+### **Ejercicio 10a: Gas ideal con unidades**
 
 Calcula la presión de 0.250 mol de un gas ideal a 25.0 °C en un recipiente de 500 mL, usando
 $R = 0.082057~\frac{\text{L·atm}}{\text{mol·K}}$ y $P = \frac{nRT}{V}$.
@@ -411,7 +668,7 @@ presion_kpa = ____
 print(presion, presion_kpa)
 """)
         + md("""
-### **Ejercicio 5b: Molaridad con unidades**
+### **Ejercicio 10b: Molaridad con unidades**
 
 Se disuelven 2.50 g de NaCl (58.44 g/mol) y se aforan a 250 mL. Calcula la molaridad en
 `molaridad`, como cantidad de pint expresada en mol/L.
