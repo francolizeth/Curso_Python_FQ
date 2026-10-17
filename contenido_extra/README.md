@@ -13,10 +13,13 @@ la sesión que elijas.
    líneas de comentario: `#@ejercicio`, `#@revisar` y, si quieres, `#@pista`.
 4. Ejecuta todo el notebook (*Entorno de ejecución → Ejecutar todas*): no debe haber errores.
 5. Descárgalo (*Archivo → Descargar → Descargar .ipynb*) y súbelo a `contenido_extra/sesion1/`,
-   `sesion2/` o `sesion3/` (*Add file → Upload files* en GitHub).
+   `sesion2/` o `sesion3/` (*Add file → Upload files* en GitHub). Como `main` está protegida,
+   GitHub te ofrecerá **crear una rama y abrir un pull request**: acepta.
 
-Unos 5 minutos después, tu material aparece al final de esa sesión, en la sección **«Material
-adicional»**, tanto en el notebook de estudiantes como en el solucionario.
+GitHub revisa tu notebook en unos 5 minutos. Cuando la coordinación acepta tu pull request, se
+abre otro automático que agrega tu material al final de esa sesión, en la sección **«Material
+adicional»**, tanto en el notebook de estudiantes como en el solucionario; al aceptarlo, tu
+material queda publicado.
 
 ## Cómo se marca un ejercicio
 
@@ -78,15 +81,16 @@ líneas de marcas; no hace falta reescribir nada.
 - **Orden:** los notebooks de una carpeta se agregan en orden alfabético. Usa nombres como
   `01_densidad.ipynb` y `02_titulacion.ipynb`.
 - **No edites** los notebooks de `notebooks_verificador/` ni de `soluciones/`: se generan
-  automáticamente y los cambios hechos a mano se pierden. Si lo intentas, GitHub detiene la
-  publicación y te avisa.
+  automáticamente y los cambios hechos a mano se pierden. Si lo intentas, las pruebas de tu pull
+  request fallan y te avisan.
 
 ## ¿Cómo sé si funcionó?
 
-En la pestaña **Actions** del repositorio aparece «Pruebas del curso»:
+En tu pull request (o en la pestaña **Actions**) aparece el check «Verificador y notebooks»:
 
-- ✅ **Verde:** tu material ya está en los notebooks. GitHub hizo un commit automático llamado
-  «Regenerar notebooks con el material de contenido_extra/».
+- ✅ **Verde:** tu material pasó las pruebas. Cuando la coordinación acepte tu pull request,
+  GitHub abrirá otro llamado «Regenerar notebooks con el material de contenido_extra/»; al
+  aceptarlo, tu material aparece en los notebooks.
 - ❌ **Rojo:** abre la ejecución y busca el paso que falló. El mensaje dice qué archivo y qué celda
   revisar; por ejemplo: «01_densidad.ipynb, ejercicio «Densidad»: No encontré una línea
   `densidad = ...`». Corrige tu notebook y vuelve a subirlo con el mismo nombre.

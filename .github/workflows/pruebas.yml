@@ -8,11 +8,13 @@ on:
 
 concurrency:
   group: pruebas-${{ github.ref }}
-  # En main no se cancela una ejecución en curso: podría estar subiendo notebooks regenerados
+  # En main no se cancela una ejecución en curso: podría estar proponiendo notebooks regenerados
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
-  contents: write   # Para subir los notebooks regenerados a main
+  contents: write        # Para subir la rama con los notebooks regenerados
+  pull-requests: write   # Para abrir el PR que los propone
+  actions: write         # Para lanzar las pruebas en esa rama
 
 env:
   # Nunca enviar datos a la hoja de registro real durante las pruebas
@@ -82,8 +84,13 @@ jobs:
       - name: Ejecutar solucionarios, notebooks del estudiante y tablero docente
         run: python pruebas/ejecutar_notebooks.py
 
-      - name: Subir los notebooks regenerados
+      # main está protegida: en lugar de subir los notebooks directamente, se proponen en un PR
+      # que pasa por el mismo check obligatorio
+      - name: Proponer los notebooks regenerados en un PR
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RAMA: regenerar-notebooks
         run: |
           git add notebooks_verificador soluciones seguimiento/Tablero_docente.ipynb verificador/adicionales_sesion*.json
           if git diff --cached --quiet; then
@@ -92,5 +99,15 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$RAMA"
           git commit -m "Regenerar notebooks con el material de contenido_extra/ (automático)"
-          git push
+          # Si ya había un PR abierto, se actualiza con la regeneración más reciente
+          git push --force origin "$RAMA"
+          if [ -z "$(gh pr list --head "$RAMA" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --base main --head "$RAMA" \
+              --title "Regenerar notebooks con el material de contenido_extra/" \
+              --body "PR automático: incluye en los notebooks del estudiante, los solucionarios y el tablero el material nuevo de \`contenido_extra/\` o los cambios en las fuentes (commit ${GITHUB_SHA::7}). Las pruebas ya pasaron con este contenido; revísalo y fusiónalo."
+          fi
+          # Los PR que crea GITHUB_TOKEN no disparan workflows: se lanzan a mano para que el check
+          # obligatorio «Verificador y notebooks» se reporte en el PR
+          gh workflow run pruebas.yml --ref "$RAMA"

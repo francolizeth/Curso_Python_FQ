@@ -40,7 +40,7 @@ Cualquier asesor puede agregar secciones y ejercicios **sin conocer el sistema d
 escribe un notebook normal en Colab con sus soluciones, marca los ejercicios con
 `#@ejercicio` / `#@revisar` y lo sube a `contenido_extra/sesionN/`. GitHub Actions lo integra al
 final de la sesión, genera la versión del estudiante y su verificación, ejecuta las pruebas y
-publica los notebooks. Los ejercicios sin marcas también se integran, solo que sin verificación
+propone los notebooks regenerados en un pull request. Los ejercicios sin marcas también se integran, solo que sin verificación
 automática. Guía completa: [`contenido_extra/README.md`](contenido_extra/README.md); resumen para
 quien quiera contribuir: [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
@@ -98,13 +98,14 @@ material de `contenido_extra/`) y comprueba que:
 
 - el código del verificador pasa `ruff`, y el Apps Script no tiene errores de sintaxis;
 - nadie editó a mano los notebooks generados (si el push solo trae material nuevo o cambios en
-  las fuentes, los notebooks regenerados se suben automáticamente al terminar);
+  las fuentes, al terminar se abre un pull request automático con los notebooks regenerados);
 - los datos simulados de Lambert-Beer se reproducen idénticos;
 - las pruebas del verificador pasan (errores típicos, pint, registro con un servidor simulado);
 - en los solucionarios **todas** las verificaciones dan ✅, en los notebooks del estudiante sin
   resolver quedan en ✏️ y el tablero docente se ejecuta sin errores.
 
-El resultado aparece en la pestaña **Actions** y en la insignia de arriba. Las pruebas definen
+El resultado aparece en la pestaña **Actions** y en la insignia de arriba. La rama `main` exige
+que el check «Verificador y notebooks» pase antes de fusionar cualquier pull request. Las pruebas definen
 `CURSO_PYTHON_SIN_REGISTRO=1`, así que nunca escriben en la hoja de registro real.
 
 > El verificador se descarga de la rama `main`, así que los cambios en `verificador/` llegan a

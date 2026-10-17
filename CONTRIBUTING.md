@@ -11,10 +11,12 @@ No necesitas conocer el sistema de verificación ni instalar nada:
 2. Escribe tu explicación y tus ejercicios **con su solución**. Para que un ejercicio se revise
    automáticamente, agrega al inicio de la celda `#@ejercicio Título` y `#@revisar variable`.
 3. Ejecuta todo el notebook sin errores, descárgalo (`.ipynb`) y súbelo a
-   `contenido_extra/sesion1/`, `sesion2/` o `sesion3/` con **Add file → Upload files**.
+   `contenido_extra/sesion1/`, `sesion2/` o `sesion3/` con **Add file → Upload files**. GitHub
+   te ofrecerá crear una rama y abrir un pull request: acepta.
 
-En unos minutos, GitHub Actions integra tu material al final de esa sesión. Los ejercicios sin
-marcas también se integran, solo que sin verificación automática.
+GitHub Actions prueba tu material en el pull request. Cuando la coordinación lo acepta, se abre
+otro pull request automático que lo integra al final de esa sesión. Los ejercicios sin marcas
+también se integran, solo que sin verificación automática.
 
 📖 Guía completa, con ejemplos y solución de problemas: [`contenido_extra/README.md`](contenido_extra/README.md).
 
@@ -41,4 +43,5 @@ python pruebas/ejecutar_notebooks.py           # Ejecuta todos los notebooks
 ```
 
 Sube las fuentes junto con los notebooks regenerados. Si olvidas regenerarlos, GitHub Actions lo
-hace por ti al terminar las pruebas.
+hace por ti al terminar las pruebas y los propone en un pull request («Regenerar notebooks con el
+material de contenido_extra/») que solo tienes que fusionar.
