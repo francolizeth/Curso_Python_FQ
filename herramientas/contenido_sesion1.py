@@ -243,11 +243,11 @@ Aquí algunos ejemplos:
 | `divmod()` | Obtener el cociente y el residuo de una división | `divmod(17, 5)` | `(3, 2)` |
 """)
         + md(r"""
-## **Ejercicio 1**: Redondeo.
+### **Ejercicio 1: Redondeo**
 
 Redondea el número $\pi = 3.141592653589793238462643383279502884197$ 15 números después del punto.
 """)
-        + ejercicio("ej_redondeo", """
+        + ejercicio("ej1", """
 pi = 3.141592653589793238462643383279502884197
 # Redondea a 15 decimales y guárdalo en la variable "pi_redondeado"
 pi_redondeado = ____
@@ -290,7 +290,7 @@ operaciones:
 
 $$ x = \frac{(8)(10) + (2)(11)}{20-4} $$
 """)
-        + ejercicio("ej1", """
+        + ejercicio("ej2", """
 # Escribe la operación completa en una sola línea
 x = ____
 
@@ -351,7 +351,7 @@ print(f"Hay {numero_moleculas:.2e} moléculas en {masa_hcl} g de HCl.")
 Calcula la cantidad de sustancia (`moles_hcn`) en 10.0 g de cianuro de hidrógeno (HCN).
 Investiga su masa molar y guárdala en `masa_molar_hcn`.
 """)
-        + ejercicio("ej2a", """
+        + ejercicio("ej3a", """
 masa_hcn = 10.0          # g
 masa_molar_hcn = ____    # g/mol
 
@@ -364,7 +364,7 @@ print(f"Moles de HCN: {moles_hcn}")
 Calcula el número de moléculas de HCN (`moleculas_hcn`). Aprovecha las variables que ya
 definiste en las celdas anteriores.
 """)
-        + ejercicio("ej2b", """
+        + ejercicio("ej3b", """
 moleculas_hcn = ____
 print(f"Moléculas de HCN: {moleculas_hcn}")
 """)
@@ -501,8 +501,8 @@ print("Valores propios:", valores_propios)
 print("Vectores propios (columnas):\\n", vectores_propios)
 """)
         + md(r"""
-### **Ejercicio 4:**
-Resuelve el sistema de ecuaciones utilizando NumPy:
+### **Ejemplo: Sistema de ecuaciones**
+Así se resuelve un sistema de ecuaciones con NumPy:
 
 $$
 \begin{cases}
@@ -522,7 +522,7 @@ solucion = np.linalg.solve(coeficientes, resultados)
 print("x, y, z =", solucion)
 """)
         + md(r"""
-### **Ejercicio 5: Matriz de rotación**
+### **Ejercicio 4: Matriz de rotación**
 
 Para rotar un vector en $\mathbb{R}^2$ un ángulo $\theta$ se multiplica por la matriz de rotación:
 
@@ -534,7 +534,7 @@ $$R(\theta) = \begin{pmatrix}
 Construye la matriz `R` para θ = 90° y guarda en `v_rotado` el vector (3, 4) rotado. Recuerda
 que `np.cos` y `np.sin` trabajan en **radianes**.
 """)
-        + ejercicio("ej3", """
+        + ejercicio("ej4", """
 theta = np.radians(90)            # 90° en radianes
 R = np.array([[____, ____],
               [____, ____]])
@@ -544,7 +544,7 @@ v_rotado = ____
 print(v_rotado)
 """)
         + md(r"""
-### **Ejercicio 6: Regla de Cramer**
+### **Ejercicio 5: Regla de Cramer**
 
 Para un sistema de $2 \times 2$
 
@@ -559,7 +559,7 @@ esa matriz con la primera o la segunda columna sustituida por los resultados.
 
 Calcula `delta`, `x` y `y`, y compara con `np.linalg.solve`.
 """)
-        + ejercicio("ej4", """
+        + ejercicio("ej5", """
 A = np.array([[3, 2], [4, -1]], dtype=float)
 b = np.array([12, 5], dtype=float)
 
@@ -614,7 +614,7 @@ print((1 * ureg.atm).to("kPa"))
 print(f"{(8.314 * ureg('J/(mol*K)')).to('L*atm/(mol*K)'):.5f}")   # R en otras unidades
 """)
         + md("""
-### **Ejercicio 7: Cálculo de la concentración**
+### **Ejemplo: Cálculo de la concentración**
 Las unidades se multiplican y se dividen junto con los números. Veamos el error típico de
 calcular una concentración con el volumen en mililitros:
 """)
@@ -627,7 +627,7 @@ print(concentracion)                  # mol/mL: correcto, pero en unidades poco 
 print(concentracion.to("mol/L"))      # pint hace la conversión por ti
 """)
         + md("""
-### **Ejercicio 8: Unidades incompatibles**
+### **Ejemplo: Unidades incompatibles**
 Si combinas unidades incompatibles, pint lanza un `DimensionalityError` en lugar de darte un
 resultado sin sentido:
 """)
@@ -638,7 +638,7 @@ volumen = 100 * ureg.mL
 masa + volumen      # ¿Sumar gramos con mililitros? Error a propósito
 """, error_esperado=True)
         + md("""
-### **Ejercicio 9: Temperaturas**
+### **Ejemplo: Temperaturas**
 Las temperaturas en °C necesitan cuidado: 20 °C no es «el doble» de 10 °C. Crea la cantidad con
 `Q_(valor, ureg.degC)` y conviértela a kelvin antes de multiplicar o dividir.
 """)
@@ -647,7 +647,7 @@ T = Q_(25.0, ureg.degC)
 print(T.to("K"))
 """)
         + md(r"""
-### **Ejercicio 10a: Gas ideal con unidades**
+### **Ejercicio 6a: Gas ideal con unidades**
 
 Calcula la presión de 0.250 mol de un gas ideal a 25.0 °C en un recipiente de 500 mL, usando
 $R = 0.082057~\frac{\text{L·atm}}{\text{mol·K}}$ y $P = \frac{nRT}{V}$.
@@ -657,7 +657,7 @@ $R = 0.082057~\frac{\text{L·atm}}{\text{mol·K}}$ y $P = \frac{nRT}{V}$.
 
 Observa que no necesitas convertir los mL ni los °C a mano.
 """)
-        + ejercicio("ej5a", """
+        + ejercicio("ej6a", """
 n = 0.250 * ureg.mol
 T = Q_(25.0, ureg.degC)
 V = ____
@@ -668,12 +668,12 @@ presion_kpa = ____
 print(presion, presion_kpa)
 """)
         + md("""
-### **Ejercicio 10b: Molaridad con unidades**
+### **Ejercicio 6b: Molaridad con unidades**
 
 Se disuelven 2.50 g de NaCl (58.44 g/mol) y se aforan a 250 mL. Calcula la molaridad en
 `molaridad`, como cantidad de pint expresada en mol/L.
 """)
-        + ejercicio("ej5b", """
+        + ejercicio("ej6b", """
 masa = ____
 masa_molar = 58.44 * ureg("g/mol")
 volumen = ____

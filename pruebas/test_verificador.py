@@ -43,13 +43,13 @@ def verificar(ejercicio, capsys):
 
 def test_jerarquia_sin_parentesis(ns, capsys):
     ns["x"] = 8 * 10 + 2 * 11 / 20 - 4
-    estado, salida = verificar(s1.ej1, capsys)
-    assert estado == "incorrecto" and "ej1.pista()" in salida
+    estado, salida = verificar(s1.ej2, capsys)
+    assert estado == "incorrecto" and "ej2.pista()" in salida
 
 
 def test_factor_mil_en_unidades(ns, capsys):
     ns.update(masa_molar_hcn=27.03, moles_hcn=10 / 27.03 * 1000)
-    estado, salida = verificar(s1.ej2a, capsys)
+    estado, salida = verificar(s1.ej3a, capsys)
     assert estado == "incorrecto" and "factor de 1000" in salida
 
 
@@ -86,14 +86,14 @@ def test_masa_molar_del_cloro(ns, capsys):
 def test_rotacion_con_grados_en_lugar_de_radianes(ns, capsys):
     R = np.array([[np.cos(90), -np.sin(90)], [np.sin(90), np.cos(90)]])
     ns.update(R=R, v_rotado=R @ np.array([3, 4]))
-    estado, salida = verificar(s1.ej3, capsys)
+    estado, salida = verificar(s1.ej4, capsys)
     assert estado == "incorrecto" and "radianes" in salida
 
 
 def test_rotacion_con_producto_elemento_a_elemento(ns, capsys):
     R = np.array([[0.0, -1.0], [1.0, 0.0]])
     ns.update(R=R, v_rotado=R * np.array([3, 4]))
-    estado, salida = verificar(s1.ej3, capsys)
+    estado, salida = verificar(s1.ej4, capsys)
     assert estado == "incorrecto" and "R @ v" in salida
 
 
@@ -103,9 +103,9 @@ def test_cramer_con_columna_equivocada(ns, capsys):
     A_y[:, 0] = [12, 5]                                     # Sustituyó la primera columna
     delta = np.linalg.det(A)
     ns.update(delta=delta, x=2.0, y=np.linalg.det(A_y) / delta)
-    assert verificar(s1.ej4, capsys)[0] == "incorrecto"
+    assert verificar(s1.ej5, capsys)[0] == "incorrecto"
     ns["y"] = 3.0
-    assert verificar(s1.ej4, capsys)[0] == "correcto"
+    assert verificar(s1.ej5, capsys)[0] == "correcto"
 
 
 def test_grafica_sin_etiquetas(ns, capsys):
@@ -122,7 +122,7 @@ def test_grafica_sin_etiquetas(ns, capsys):
 
 def test_espacios_sin_llenar_quedan_pendientes(ns, capsys):
     ns["x"] = nucleo.____
-    assert verificar(s1.ej1, capsys)[0] == "pendiente"
+    assert verificar(s1.ej2, capsys)[0] == "pendiente"
 
     # Así queda la función cuando el estudiante ejecuta la celda sin completarla
     exec("def formula_gauss(n):\n    ____\n", {"____": nucleo.____}, ns)
@@ -144,7 +144,7 @@ def test_placeholder_no_permite_ciclos_infinitos():
 
 def test_cantidad_en_otras_unidades_se_convierte(ns, capsys):
     ns.update(masa_molar_hcn=27.03 * ureg("g/mol"), moles_hcn=(10 / 27.03 * 1000) * ureg.mmol)
-    assert verificar(s1.ej2a, capsys)[0] == "correcto"
+    assert verificar(s1.ej3a, capsys)[0] == "correcto"
 
 
 def test_temperatura_en_celsius_se_convierte(ns, capsys):
@@ -154,25 +154,25 @@ def test_temperatura_en_celsius_se_convierte(ns, capsys):
 
 def test_dimension_incorrecta(ns, capsys):
     ns.update(masa_molar_hcn=27.03 * ureg("g/mol"), moles_hcn=0.37 * ureg.g)
-    estado, salida = verificar(s1.ej2a, capsys)
+    estado, salida = verificar(s1.ej3a, capsys)
     assert estado == "incorrecto" and "se esperaban unidades" in salida
 
 
 def test_ejercicio_de_pint_exige_unidades(ns, capsys):
     ns["molaridad"] = 0.1711
-    estado, salida = verificar(s1.ej5b, capsys)
+    estado, salida = verificar(s1.ej6b, capsys)
     assert estado == "incorrecto" and "sin unidades" in salida
     ns["molaridad"] = (2.50 * ureg.g / (58.44 * ureg("g/mol")) / (250 * ureg.mL))
-    assert verificar(s1.ej5b, capsys)[0] == "correcto"
+    assert verificar(s1.ej6b, capsys)[0] == "correcto"
 
 
 def test_gas_ideal_con_pint(ns, capsys):
     presion = (0.250 * ureg.mol * 0.082057 * ureg("L*atm/(mol*K)")
                * ureg.Quantity(25.0, ureg.degC).to("K") / (500 * ureg.mL)).to("atm")
     ns.update(presion=presion, presion_kpa=presion.to("kPa"))
-    assert verificar(s1.ej5a, capsys)[0] == "correcto"
+    assert verificar(s1.ej6a, capsys)[0] == "correcto"
     ns["presion_kpa"] = presion.to("Pa")
-    estado, salida = verificar(s1.ej5a, capsys)
+    estado, salida = verificar(s1.ej6a, capsys)
     assert estado == "incorrecto" and "kPa" in salida
 
 
@@ -247,8 +247,8 @@ def test_registro_envia_resultados_sin_codigo(servidor, ns, capsys):
     s1.iniciar_registro("A01", "clave-prueba")
     assert "activo" in capsys.readouterr().out
     ns["x"] = 6.375
-    s1.ej1.verificar()
-    s1.ej3.pista()
+    s1.ej2.verificar()
+    s1.ej4.pista()
     for _ in range(50):
         if len(_AppsScriptFalso.recibidos) >= 3:
             break
@@ -256,7 +256,7 @@ def test_registro_envia_resultados_sin_codigo(servidor, ns, capsys):
     eventos = [(d["ejercicio"], d["evento"]) for d in _AppsScriptFalso.recibidos]
     # "inicio" se envía de forma síncrona; los demás van en hilos y pueden llegar en otro orden
     assert eventos[0] == ("", "inicio")
-    assert sorted(eventos[1:]) == [("ej1", "correcto"), ("ej3", "pista")]
+    assert sorted(eventos[1:]) == [("ej2", "correcto"), ("ej4", "pista")]
     assert all(set(d) == {"clave", "alumno", "sesion", "ejercicio", "evento", "intento",
                           "detalle", "marca_tiempo"} for d in _AppsScriptFalso.recibidos)
 
@@ -266,8 +266,8 @@ def test_registro_caido_no_interrumpe(servidor, ns, capsys):
     servidor.shutdown()
     servidor.server_close()
     ns["x"] = 1
-    s1.ej1.verificar()           # No debe lanzar excepciones
-    assert s1.ej1.estado == "incorrecto"
+    s1.ej2.verificar()           # No debe lanzar excepciones
+    assert s1.ej2.estado == "incorrecto"
 
 
 def test_variable_de_entorno_desactiva_el_registro(monkeypatch, capsys):

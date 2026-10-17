@@ -43,15 +43,15 @@ a = str(a)
 """)
 
 
-# --- Ejercicio 1: Redondeo ----------------------------------------------------
+# --- Ejercicio 1 -------------------------------------------------------------
 
-def _ej_redondeo(ns):
+def _ej1(ns):
     comparar_numero("pi_redondeado", obtener(ns, "pi_redondeado"), round(math.pi, 15), rel=1e-15)
     return "¡Correcto! Has redondeado pi a 15 decimales."
 
 
-ej_redondeo = sesion.agregar(
-    "ej_redondeo", "Redondeo", _ej_redondeo,
+ej1 = sesion.agregar(
+    "ej1", "Redondeo", _ej1,
     pista="Utiliza la función `round(numero, decimales)`. Asegúrate de guardar tu resultado en "
           "una variable llamada `pi_redondeado`.",
     solucion="""
@@ -61,14 +61,14 @@ print(pi_redondeado)
 """)
 
 
-# --- Ejercicio 1 -------------------------------------------------------------
+# --- Ejercicio 2 -------------------------------------------------------------
 
-def _ej1(ns):
+def _ej2(ns):
     comparar_numero("x", obtener(ns, "x"), (8 * 10 + 2 * 11) / (20 - 4))
 
 
-ej1 = sesion.agregar(
-    "ej1", "Jerarquía de operaciones", _ej1,
+ej2 = sesion.agregar(
+    "ej2", "Jerarquía de operaciones", _ej2,
     pista="El numerador y el denominador completos deben ir entre paréntesis: "
           "`(a + b) / (c - d)`. La multiplicación se escribe con `*`.",
     solucion="""
@@ -77,15 +77,15 @@ print(f"x = {x}")
 """)
 
 
-# --- Ejercicio 2 -------------------------------------------------------------
+# --- Ejercicio 3 -------------------------------------------------------------
 
-def _ej2a(ns):
+def _ej3a(ns):
     comparar_numero("masa_molar_hcn", obtener(ns, "masa_molar_hcn"), MM_HCN, rel=5e-3, unidades="g/mol")
     comparar_numero("moles_hcn", obtener(ns, "moles_hcn"), 10.0 / MM_HCN, rel=5e-3, unidades="mol")
 
 
-ej2a = sesion.agregar(
-    "ej2a", "Moles de HCN", _ej2a,
+ej3a = sesion.agregar(
+    "ej3a", "Moles de HCN", _ej3a,
     pista="La masa molar del HCN es la suma de las masas atómicas de H, C y N "
           "(≈ 27.03 g/mol). Luego, n = m / M.",
     solucion="""
@@ -97,13 +97,13 @@ print(f"Moles de HCN: {moles_hcn:.4f} mol")
 """)
 
 
-def _ej2b(ns):
+def _ej3b(ns):
     comparar_numero("moleculas_hcn", obtener(ns, "moleculas_hcn"),
                     10.0 / MM_HCN * NA, rel=5e-3)
 
 
-ej2b = sesion.agregar(
-    "ej2b", "Moléculas de HCN", _ej2b,
+ej3b = sesion.agregar(
+    "ej3b", "Moléculas de HCN", _ej3b,
     pista="Multiplica la cantidad de sustancia (`moles_hcn`) por la constante de "
           "Avogadro. En Python, 6.022 × 10²³ se escribe `6.022e23`.",
     solucion="""
@@ -114,9 +114,9 @@ print(f"Moléculas de HCN: {moleculas_hcn:.3e}")
 """)
 
 
-# --- Ejercicio 3: NumPy, matriz de rotación -----------------------------------------
+# --- Ejercicio 4: NumPy, matriz de rotación -----------------------------------------
 
-def _ej3(ns):
+def _ej4(ns):
     import numpy as np
     R = obtener(ns, "R")
     v_rotado = obtener(ns, "v_rotado")
@@ -135,8 +135,8 @@ def _ej3(ns):
     return "El vector (3, 4) rotado 90° es (−4, 3): conserva su longitud de 5."
 
 
-ej3 = sesion.agregar(
-    "ej3", "Rotación de un vector", _ej3,
+ej4 = sesion.agregar(
+    "ej4", "Rotación de un vector", _ej4,
     pista="`theta` ya está en radianes: usa `np.cos(theta)` y `np.sin(theta)`. El producto "
           "matriz-vector es `R @ v`.",
     solucion="""
@@ -149,17 +149,17 @@ print(v_rotado)
 """)
 
 
-# --- Ejercicio 4: NumPy, regla de Cramer -------------------------------------------
+# --- Ejercicio 5: NumPy, regla de Cramer -------------------------------------------
 
-def _ej4(ns):
+def _ej5(ns):
     comparar_numero("delta", obtener(ns, "delta"), -11.0)
     for nombre, esperado in (("x", 2.0), ("y", 3.0)):
         comparar_numero(nombre, obtener(ns, nombre), esperado)
     return "x = 2 y y = 3, igual que con `np.linalg.solve`."
 
 
-ej4 = sesion.agregar(
-    "ej4", "Regla de Cramer", _ej4,
+ej5 = sesion.agregar(
+    "ej5", "Regla de Cramer", _ej5,
     pista="Δ es `np.linalg.det(A)`. Para Δy copia `A` y sustituye su **segunda** columna por b: "
           "`A_y[:, 1] = b`. Después, x = Δx / Δ y y = Δy / Δ.",
     solucion="""
@@ -180,12 +180,12 @@ print("Con np.linalg.solve:", np.linalg.solve(A, b))
 """)
 
 
-# --- Ejercicio 5: unidades con pint -------------------------------------------------
+# --- Ejercicio 6: unidades con pint -------------------------------------------------
 
 R_ATM_EXACTA = 0.082057   # atm·L/(mol·K)
 
 
-def _ej5a(ns):
+def _ej6a(ns):
     presion = obtener(ns, "presion")
     esperado = 0.250 * R_ATM_EXACTA * 298.15 / 0.500
     comparar_cantidad("presion", presion, esperado, "atm", rel=2e-3)
@@ -197,8 +197,8 @@ def _ej5a(ns):
     return f"P = {esperado:.2f} atm. pint convirtió los mL y los °C por ti."
 
 
-ej5a = sesion.agregar(
-    "ej5a", "Gas ideal con unidades", _ej5a,
+ej6a = sesion.agregar(
+    "ej6a", "Gas ideal con unidades", _ej6a,
     pista="Multiplica cada número por su unidad (`500 * ureg.mL`). La temperatura en °C debe "
           'convertirse antes de multiplicar: `T.to("K")`. Al final, `.to("atm")` expresa el '
           "resultado en atmósferas.",
@@ -214,14 +214,14 @@ print(f"P = {presion:.3f~P} = {presion_kpa:.1f~P}")
 """)
 
 
-def _ej5b(ns):
+def _ej6b(ns):
     molaridad = obtener(ns, "molaridad")
     comparar_cantidad("molaridad", molaridad, 2.50 / MM_NACL / 0.250, "mol/L", rel=2e-3)
     return "Aunque el volumen estaba en mL, las unidades cuadran solas."
 
 
-ej5b = sesion.agregar(
-    "ej5b", "Molaridad con unidades", _ej5b,
+ej6b = sesion.agregar(
+    "ej6b", "Molaridad con unidades", _ej6b,
     pista='Divide la masa entre la masa molar y entre el volumen, todos con unidades, y '
           'termina con `.to("mol/L")`. No conviertas los mL a mano.',
     solucion="""
